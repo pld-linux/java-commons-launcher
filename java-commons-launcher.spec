@@ -1,13 +1,14 @@
 %include	/usr/lib/rpm/macros.java
-Summary:	The Launcher Component is designed to be a cross platform Java application launcher
+Summary:	Commons Launcher - a cross platform Java application launcher
+Summary(pl.UTF-8):	Commons Launcher - wieloplatformowy komponent do uruchamiania aplikacji w Javie
 Name:		jakarta-commons-launcher
 Version:	0.9
 Release:	0.1
 License:	Apache Software License
 Group:		Development/Languages/Java
-URL:		http://jakarta.apache.org/commons/launcher/
 Source0:	http://archive.apache.org/dist/jakarta/commons/launcher/source/launcher-%{version}-src.tar.gz
 # Source0-md5:	781e74002a40aa797c5c1f1758252ffe
+URL:		http://jakarta.apache.org/commons/launcher/
 BuildRequires:	ant
 BuildRequires:	jpackage-utils >= 0:1.5.30
 BuildRequires:	rpm-javaprov
@@ -36,13 +37,37 @@ shell script may be desirable are:
 - You want to provide localized error messages which is very tricky to
   do in batch and shell scripts.
 
+%description -l pl.UTF-8
+Commons-launcher eliminuje potrzebę używania skryptu powłoki do
+uruchamiania klas Javy. Niektóre sytuacje kiedy taka eliminacja może
+być pożądana to:
+
+- kiedy chcemy zapobiec określaniu ścieżek do katalogu aplikacji;
+  dynamiczne określanie ich może wymagać sztuczek w przypadku
+  windowsowych skryptów wsadowych lub uniksowych dowiązań
+  symbolicznych
+- kiedy chcemy zapobiec obsłudze natywnych separatorów ścieżek lub
+  cytowania w skryptach
+- potrzebujemy wymusić konkretne właściwości systemu, np.
+  java.endorsed.dirs w przypadku uruchamiania pod JDK 1.4
+- chcemy pozwolić użytkownikom przekazywać własne argumenty JVM lub
+  właściwości systemu bez potrzeby analizy i zmiany kolejności
+  argumentów w skrypcie
+- chcemy załadować właściwości systemu z pliku konfiguracyjnego
+  zamiast zaszywać je na stałe w skrypcie
+- chcemy zapewnić zlokalizowane komunikaty błędów
+
 %package javadoc
 Summary:	Javadoc for %{name}
+Summary(pl.UTF-8):	Dokumentacja Javadoc dla %{name}
 Group:		Documentation
 Requires:	jpackage-utils
 
 %description javadoc
 Javadoc for %{name}.
+
+%description javadoc -l pl.UTF-8
+Dokumentacja Javadoc dla %{name}.
 
 %prep
 %setup -q -n commons-launcher
@@ -50,11 +75,11 @@ Javadoc for %{name}.
 %build
 mkdir lib
 %ant \
-  -Dbuild.sysclasspath=only \
-  -Dfinal.name=commons-launcher \
-  -Dj2se.javadoc=%{_javadocdir}/java \
-  -Dsrcdir=. \
-  jar javadoc
+	-Dbuild.sysclasspath=only \
+	-Dfinal.name=commons-launcher \
+	-Dj2se.javadoc=%{_javadocdir}/java \
+	-Dsrcdir=. \
+	jar javadoc
 
 %install
 rm -rf $RPM_BUILD_ROOT
