@@ -4,7 +4,7 @@ Summary(pl.UTF-8):	Commons Launcher - wieloplatformowy komponent do uruchamiania
 Name:		jakarta-commons-launcher
 Version:	0.9
 Release:	0.1
-License:	Apache Software License
+License:	Apache
 Group:		Development/Languages/Java
 Source0:	http://archive.apache.org/dist/jakarta/commons/launcher/source/launcher-%{version}-src.tar.gz
 # Source0-md5:	781e74002a40aa797c5c1f1758252ffe
