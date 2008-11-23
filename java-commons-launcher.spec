@@ -1,7 +1,11 @@
+#
+# Conditional build:
+%bcond_without	javadoc		# don't build javadoc
+
 %include	/usr/lib/rpm/macros.java
 Summary:	Commons Launcher - a cross platform Java application launcher
 Summary(pl.UTF-8):	Commons Launcher - wieloplatformowy komponent do uruchamiania aplikacji w Javie
-Name:		jakarta-commons-launcher
+Name:		java-commons-launcher
 Version:	0.9
 Release:	0.1
 License:	Apache
@@ -13,6 +17,9 @@ BuildRequires:	ant
 BuildRequires:	jpackage-utils >= 0:1.5.30
 BuildRequires:	rpm-javaprov
 BuildRequires:	rpmbuild(macros) >= 1.300
+Requires:	jpackage-utils
+Provides:	jakarta-commons-launcher
+Obsoletes:	jakarta-commons-launcher
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -44,8 +51,7 @@ być pożądana to:
 
 - kiedy chcemy zapobiec określaniu ścieżek do katalogu aplikacji;
   dynamiczne określanie ich może wymagać sztuczek w przypadku
-  windowsowych skryptów wsadowych lub uniksowych dowiązań
-  symbolicznych
+  windowsowych skryptów wsadowych lub uniksowych dowiązań symbolicznych
 - kiedy chcemy zapobiec obsłudze natywnych separatorów ścieżek lub
   cytowania w skryptach
 - potrzebujemy wymusić konkretne właściwości systemu, np.
@@ -58,16 +64,16 @@ być pożądana to:
 - chcemy zapewnić zlokalizowane komunikaty błędów
 
 %package javadoc
-Summary:	Javadoc for %{name}
-Summary(pl.UTF-8):	Dokumentacja Javadoc dla %{name}
+Summary:	Javadoc for commons-launcher
+Summary(pl.UTF-8):	Dokumentacja Javadoc dla commons-launcher
 Group:		Documentation
 Requires:	jpackage-utils
 
 %description javadoc
-Javadoc for %{name}.
+Javadoc for commons-launcher.
 
 %description javadoc -l pl.UTF-8
-Dokumentacja Javadoc dla %{name}.
+Dokumentacja Javadoc dla commons-launcher.
 
 %prep
 %setup -q -n commons-launcher
@@ -92,23 +98,26 @@ for a in dist/bin/*.jar; do
 done
 
 # javadoc
+%if %{with javadoc}
 install -d $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 cp -pr dist/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
+%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post javadoc
-rm -f %{_javadocdir}/%{name}
-ln -s %{name}-%{version} %{_javadocdir}/%{name}
+ln -nfs %{name}-%{version} %{_javadocdir}/%{name}
 
 %files
 %defattr(644,root,root,755)
 %doc LICENSE.txt STATUS.html
 %{_javadir}/*.jar
 
+%if %{with javadoc}
 %files javadoc
 %defattr(644,root,root,755)
 %{_javadocdir}/%{name}-%{version}
 %ghost %{_javadocdir}/%{name}
+%endif
