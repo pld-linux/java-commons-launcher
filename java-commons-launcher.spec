@@ -10,9 +10,9 @@ Version:	0.9
 Release:	0.1
 License:	Apache
 Group:		Development/Languages/Java
-Source0:	http://archive.apache.org/dist/jakarta/commons/launcher/source/launcher-%{version}-src.tar.gz
+Source0:	http://archive.apache.org/dist/commons/launcher/source/launcher-%{version}-src.tar.gz
 # Source0-md5:	781e74002a40aa797c5c1f1758252ffe
-URL:		http://jakarta.apache.org/commons/launcher/
+URL:		http://commons.apache.org/launcher/
 BuildRequires:	ant
 BuildRequires:	jpackage-utils >= 0:1.5.30
 BuildRequires:	rpm-javaprov
@@ -68,6 +68,8 @@ Summary:	Javadoc for commons-launcher
 Summary(pl.UTF-8):	Dokumentacja Javadoc dla commons-launcher
 Group:		Documentation
 Requires:	jpackage-utils
+Provides:	jakarta-commons-launcher-apidocs
+Obsoletes:	jakarta-commons-launcher-apidocs
 
 %description javadoc
 Javadoc for commons-launcher.
