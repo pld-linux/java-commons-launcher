@@ -7,7 +7,7 @@ Summary:	Commons Launcher - a cross platform Java application launcher
 Summary(pl.UTF-8):	Commons Launcher - wieloplatformowy komponent do uruchamiania aplikacji w Javie
 Name:		java-commons-launcher
 Version:	0.9
-Release:	0.1
+Release:	1
 License:	Apache
 Group:		Development/Languages/Java
 Source0:	http://archive.apache.org/dist/commons/launcher/source/launcher-%{version}-src.tar.gz
