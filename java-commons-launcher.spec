@@ -9,7 +9,7 @@ Name:		java-commons-launcher
 Version:	0.9
 Release:	1
 License:	Apache
-Group:		Development/Languages/Java
+Group:		Libraries/Java
 Source0:	http://archive.apache.org/dist/commons/launcher/source/launcher-%{version}-src.tar.gz
 # Source0-md5:	781e74002a40aa797c5c1f1758252ffe
 URL:		http://commons.apache.org/launcher/
