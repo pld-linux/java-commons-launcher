@@ -3,17 +3,20 @@
 %bcond_without	javadoc		# don't build javadoc
 
 %include	/usr/lib/rpm/macros.java
+
+%define		srcname	commons-launcher
 Summary:	Commons Launcher - a cross platform Java application launcher
 Summary(pl.UTF-8):	Commons Launcher - wieloplatformowy komponent do uruchamiania aplikacji w Javie
 Name:		java-commons-launcher
-Version:	0.9
-Release:	1
-License:	Apache
+Version:	1.1
+Release:	0.1
+License:	Apache v2.0
 Group:		Libraries/Java
-Source0:	http://archive.apache.org/dist/commons/launcher/source/launcher-%{version}-src.tar.gz
-# Source0-md5:	781e74002a40aa797c5c1f1758252ffe
+Source0:	http://www.apache.org/dist/commons/launcher/source/%{srcname}-%{version}-src.tar.gz
+# Source0-md5:	99082b05bfc6f5ce452d179ee2871ef9
 URL:		http://commons.apache.org/launcher/
 BuildRequires:	ant
+BuildRequires:	java-gcj-compat-devel
 BuildRequires:	jpackage-utils >= 0:1.5.30
 BuildRequires:	rpm-javaprov
 BuildRequires:	rpmbuild(macros) >= 1.300
@@ -82,8 +85,8 @@ Dokumentacja Javadoc dla commons-launcher.
 
 %build
 mkdir lib
-%ant \
-	-Dbuild.sysclasspath=only \
+export SHELL=/bin/sh
+%ant	-Dbuild.compiler=extJavac \
 	-Dfinal.name=commons-launcher \
 	-Dj2se.javadoc=%{_javadocdir}/java \
 	-Dsrcdir=. \
@@ -101,25 +104,24 @@ done
 
 # javadoc
 %if %{with javadoc}
-install -d $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -pr dist/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
+install -d $RPM_BUILD_ROOT%{_javadocdir}/%{srcname}-%{version}
+cp -pr dist/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{srcname}-%{version}
+ln -s %{srcname}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{srcname} # ghost symlink
 %endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post javadoc
-ln -nfs %{name}-%{version} %{_javadocdir}/%{name}
+ln -nfs %{srcname}-%{version} %{_javadocdir}/%{srcname}
 
 %files
 %defattr(644,root,root,755)
-%doc LICENSE.txt STATUS.html
 %{_javadir}/*.jar
 
 %if %{with javadoc}
 %files javadoc
 %defattr(644,root,root,755)
-%{_javadocdir}/%{name}-%{version}
-%ghost %{_javadocdir}/%{name}
+%{_javadocdir}/%{srcname}-%{version}
+%ghost %{_javadocdir}/%{srcname}
 %endif
