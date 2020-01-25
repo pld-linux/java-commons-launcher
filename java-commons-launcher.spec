@@ -2,7 +2,6 @@
 # Conditional build:
 %bcond_without	javadoc		# don't build javadoc
 
-%include	/usr/lib/rpm/macros.java
 
 %define		srcname	commons-launcher
 Summary:	Commons Launcher - a cross platform Java application launcher
