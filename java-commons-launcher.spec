@@ -2,13 +2,15 @@
 # Conditional build:
 %bcond_without	javadoc		# don't build javadoc
 
+%{?use_default_jdk:%use_default_jdk 8}
+
 
 %define		srcname	commons-launcher
 Summary:	Commons Launcher - a cross platform Java application launcher
 Summary(pl.UTF-8):	Commons Launcher - wieloplatformowy komponent do uruchamiania aplikacji w Javie
 Name:		java-commons-launcher
 Version:	1.1
-Release:	2
+Release:	3
 License:	Apache v2.0
 Group:		Libraries/Java
 Source0:	http://www.apache.org/dist/commons/launcher/source/%{srcname}-%{version}-src.tar.gz
@@ -17,7 +19,8 @@ URL:		http://commons.apache.org/launcher/
 BuildRequires:	ant
 BuildRequires:	jpackage-utils >= 0:1.5.30
 BuildRequires:	rpm-javaprov
-BuildRequires:	rpmbuild(macros) >= 1.300
+BuildRequires:	rpmbuild(macros) >= 1.556
+%buildrequires_jdk
 Requires:	jpackage-utils
 Provides:	jakarta-commons-launcher
 Obsoletes:	jakarta-commons-launcher
